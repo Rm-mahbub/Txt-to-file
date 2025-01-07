@@ -1,0 +1,48 @@
+<?php
+$phn = $_GET["phone"];
+$url = "https://www.8mbets.net/api/user/request-forget-tac";
+
+// Payload data
+$data = array(
+    "sendType" => "mobile",
+    "type" => "forget",
+    "key" => "mobileno",
+    "value" => "88" . $phn,
+    "language" => "bn",
+    "langCountry" => "bn-bd"
+);
+
+// User-agent
+$userAgent = "Monibot";
+
+// Set up cURL options
+$options = array(
+    CURLOPT_URL => $url,
+    CURLOPT_POST => true,
+    CURLOPT_POSTFIELDS => http_build_query($data),
+    CURLOPT_HTTPHEADER => array(
+        "User-Agent: $userAgent"
+    ),
+    CURLOPT_RETURNTRANSFER => true
+);
+
+// Initialize cURL session
+$curl = curl_init();
+
+// Set cURL options
+curl_setopt_array($curl, $options);
+
+// Execute cURL request
+$response = curl_exec($curl);
+
+// Check for errors
+if ($response === false) {
+    echo "Error: " . curl_error($curl);
+} else {
+    // Output the response
+    echo $response;
+}
+
+// Close cURL session
+curl_close($curl);
+?>
